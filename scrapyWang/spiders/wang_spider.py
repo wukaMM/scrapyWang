@@ -27,10 +27,9 @@ class ScrapywangSpider(Spider):
             url = "https://pywinauto.googlecode.com/hg/pywinauto/docs/" + item
             try:
                 r = Request(url, callback=self.parse, dont_filter=True)
-                new_item = item.replace("#", ".")
-                r.title = os.path.basename(new_item)
-                r.foldname = os.path.dirname(new_item)
-                text_html = text_html.replace(item, new_item)
+                n = item.split("#")
+                r.title = os.path.basename(n[0])
+                r.foldname = os.path.dirname(n[0])
                 yield r
             except Exception, e:
                 print "Exception : ",str(e)
