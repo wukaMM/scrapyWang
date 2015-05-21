@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
+import os
 
 from scrapy.spider import Spider
 from scrapy.http import Request
@@ -27,7 +28,8 @@ class ScrapywangSpider(Spider):
             try:
                 r = Request(url, callback=self.parse, dont_filter=True)
                 new_item = item.replace("#", ".")
-                r.title = new_item[5:]
+                r.title = os.path.basename(new_item)
+                r.foldname = os.path.dirname(new_item)
                 text_html = text_html.replace(item, new_item)
                 yield r
             except Exception, e:
@@ -37,8 +39,10 @@ class ScrapywangSpider(Spider):
         sw['desc'] = text_html
         try:
             sw['title'] = response.request.title
+            sw['foldname'] = response.request.foldname
         except:
             sw['title'] = "index.html"
+            sw['foldname'] = ""
         
         yield sw
 

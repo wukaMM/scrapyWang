@@ -11,3 +11,4 @@ from scrapy.item import Item, Field
 class ScrapywangItem(Item):
     title = Field()
     desc = Field()
+    foldname = Field()

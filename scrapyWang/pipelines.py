@@ -13,6 +13,8 @@ class ScrapywangPipeline(object):
 
     def process_item(self, item, spider):
         filename = item['title']
+        foldname = item['foldname']
+        
         line = item['desc'] + '\n'
         content_type = chardet.detect(line)
 
@@ -20,8 +22,9 @@ class ScrapywangPipeline(object):
             line = line.decode(content_type['encoding'])
         line = line.encode("utf-8")
         if filename != "index.html":
-            os.mkdir("code")
-            filename = "code/"+filename
+            if not os.path.exists(foldname):
+                os.mkdir(foldname)
+            filename = foldname +'/'+filename
             
         open(filename,"wb").write(line)
 
