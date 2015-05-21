@@ -9,6 +9,5 @@ from scrapy.item import Item, Field
 
 
 class ScrapywangItem(Item):
-    # link = Field()
     title = Field()
     desc = Field()
